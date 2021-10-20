@@ -1,0 +1,38 @@
+---
+title: "Tidy Tuesday Pumpkin File"
+output: html_document
+---
+
+
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(maptools)
+library(ggmap)
+```
+
+```{r}
+pumpkins <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-19/pumpkins.csv')
+```
+```{r}
+states_map <- map_data("state")
+```
+
+
+## Data Filtering 
+
+```{r}
+Pumpkin_US <- 
+  pumpkins %>%
+  filter(country == "United States")
+```
+
+```{r}
+Pumpkin_US_State %>% 
+  ggplot(aes(fill=n)) +
+  geom_map(aes(map_id = state_prov), map = states_map) +
+  expand_limits(x=states_map$long, y=states_map$lat) 
+```
+
